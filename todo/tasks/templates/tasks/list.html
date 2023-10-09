@@ -1,14 +1,39 @@
-<h3>To Do</h3>
+{% load static %}
 
-<form method="POST" action="/">
-    {% csrf_token %}
-    {{form.title}}
-    <input type="submit" name="Create Task">
-</form>
-
-{% for task in tasks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body position="relative">
     <div>
-        <a href="{% url 'update_task' task.id %}">Update</a>
-        <p>{{task}}</p>
+        <div>
+            <form method="POST" action="/">
+                 {% csrf_token %}
+                 {{form.title}}
+                 <input type="submit" name="Create Task">
+             </form>
+         </div>
+         <br>
+         <div>
+             {% for task in tasks %}
+             <div>
+                 <a href="{% url 'update_task' task.id %}">Update</a>
+                 <a href="{% url 'delete' task.id %}">Delete</a>
+                 
+                 {% if task.complete == True %}
+                 <strike>{{task}}</strike>
+                 {% else %}
+                 <span>{{task}}</span>
+                 {% endif %}
+             </div>
+             <br>
+             {% endfor %}
+         </div>
     </div>
-{% endfor %}
+</body>
+</html>
+
